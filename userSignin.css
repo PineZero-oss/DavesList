@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --primary-color: rgb(255, 150, 150);
+    --accent-color: rgb(255, 149, 107);
+    --secondary-color: rgb(255, 203, 203);
+    --base-color: white;
+    --text-color: black;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: Poppins, Segoe UI, sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+ body{
+    min-height: 100vh;
+    background-image: url(raw/SigninBackground.jpg);
+    overflow-x: hidden;
+    background-size: cover;
+    background-position: right;
+ }
+
+ .Container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 0 1rem 1rem 0;
+    background-color: var(--base-color);
+    height: 100vh;
+    padding: 0.6rem;
+    width: max(40%, 37.5rem); 
+ }
+
+ h1{
+
+    font-size: 3rem;
+    text-transform: uppercase;
+    font-weight: 700;
+ }
+
+ form{
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: min(25rem, 100%);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+ }
+
+ form > div{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+ }
+
+form label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: var(--primary-color);
+    color: var(--base-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 0.5rem 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+form label svg {
+    fill: var(--base-color);
+}
+
+form input{
+    box-sizing: border-box;
+    font: inherit;
+    flex-grow: 1;
+    min-width: 0;
+    padding: 0.5rem;
+    height: 50px;
+    border: 2px var(--secondary-color);
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background-color: var(--secondary-color);
+}
+
+form input:hover{
+    border: 2px solid var(--accent-color);
+    
+}
+
+form input:focus{
+    outline: none;
+    border: 2px solid var(--accent-color);
+}
+
+button{
+    font: inherit;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--base-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: 150ms ease-in-out;
+}
+
+button:hover{
+    background-color: var(--text-color);
+    color: var(--base-color);
+    border-color: var(--text-color);
+    cursor: pointer;
+}
+
+button:focus{
+    outline: none;
+    background-color: var(--text-color);
+    color: var(--base-color);
+    border-color: var(--text-color);
+}
+
+a{
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover{
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+#error-message{
+    color: var(--accent-color);
+}
+
+@media(max-width: 1100px){
+    .Container{
+        width: min(37.5rem, 100%);
+        border-radius: 0;
+    }
+
+}
+
+

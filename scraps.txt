@@ -1,0 +1,200 @@
+<section class="Lpage-Hero">  
+
+<div class="hero-content">
+
+<h1 id="Lpage-SiteName" class="Lpage-SiteName"> <b>DavesList</b></h1>  
+<p class="hero-SloganText"> Buy, Sell, Expand, Grow Your Ambitions.</p><br>
+ <button id="loginbtn" class="loginbtn">Login</button>
+
+</div>
+
+</section>
+
+
+<div class="Limage-Container" >
+  <div class="gradient"></div>
+  
+
+</div>
+
+<br>
+
+<section class="Main-ContentContainer" > 
+
+<div class="LPage-ConContainer1">
+
+
+<div class="Ltext-content">
+<h2><b>Discover</b> </h2> 
+
+<p> 
+  Discover some of your favorite products at just a click of a button. 
+  Dave’s List serves to create a community that allows users to easily buy and sell services to each other no strings attached.</p>
+</div>
+
+
+<div class="Limage1"> <img src="raw/Discoverimg.png" alt="" width="800" height="400">  </div>
+
+  
+</div> 
+
+<div class="LPage-ConContainer2">
+
+<div class="Limage2"> <img src="raw/Createimg.png" alt="" width="800" height="400">  </div>
+
+<div class="Ltext-content"> 
+
+<h2><b>Create</b></h2>
+<p>Always wanted to sell your products from a trusted local online marketplace? Well now turn those ambitions into reality with us - 
+  buy, sell and grow your community with DavesList. </p>
+</div>
+
+</div>
+
+
+</section>
+
+
+<footer class="Page-Footer">      </footer>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+
+
+
+body{
+    
+    height: 100%;
+    font-size: 1rem;
+}
+
+
+.Lpage-Hero{
+     display: flex;
+     height: 460px;
+     width: auto;
+     justify-content: center;
+     align-items: center;
+}
+
+
+.hero-content{
+
+     height: 280px;    
+     width: 1623px;
+}
+
+.hero-content .Lpage-SiteName{
+
+     text-align: center;
+     font-size: 64px;
+}
+
+.hero-content .hero-SloganText{
+
+     text-align: center;
+     font-size: 32px;
+     height: 32;
+     color: darkgray; 
+}
+
+.hero-content .loginbtn{
+
+   display: block;
+   margin: 0 auto;
+   outline: none;
+   border: none;
+   font-size: 16px;
+   height: 52px;
+   width: 128px;
+   color: white;
+   background-color: black;
+   border-radius: 15px;
+
+}
+
+
+.Limage-Container{
+     display: flex;
+     height: 490px;
+     width: auto;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 80px;
+
+}
+
+.Limage-Container .gradient{
+
+     padding:0;
+     background-color: lightskyblue;
+     height: 490px;
+     width: 96%;
+     border-radius: 15px;
+}
+
+.Main-ContentContainer{
+
+     display: flex;
+     width: auto;
+     flex-direction: column;
+     height: 1200px;
+     margin-bottom: 80px;
+    
+}
+
+.Main-ContentContainer .LPage-ConContainer1{
+     display: flex;
+     height: 600px;
+     align-items:flex-start;
+     justify-content: flex-end;
+     padding-right: 38px;
+     padding-left: 38px;
+     gap: 20px;    
+
+}
+
+.Main-ContentContainer .LPage-ConContainer1 .Ltext-content{
+     display: flex;
+     flex-direction: column;   
+}
+
+.Main-ContentContainer .LPage-ConContainer1 .Limage1 img{
+
+     border-radius: 15px;
+    
+     
+}
+
+.Main-ContentContainer .LPage-ConContainer2{
+
+     display: flex;
+     height: 600px;
+     align-items: flex-start;
+     padding-left: 38px;
+     padding-right: 38px;
+     gap: 20px;
+
+
+}
+
+.Main-ContentContainer .LPage-ConContainer2 .Ltext-content{
+     display: flex;
+     flex-direction: column;   
+}
+
+.Main-ContentContainer .LPage-ConContainer2 .Limage2 img{
+     
+      border-radius: 15px;
+    
+}
+
+.Page-Footer{
+
+     display: flex;
+     height: 400px;
+     width: auto;
+     background-color: rgb(201, 201, 201);
+
+}
+
+<p>&copy; 2023 DavesList. All rights reserved.</p>

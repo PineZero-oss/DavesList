@@ -1,0 +1,31 @@
+
+/** Foooter Css
+ */
+.page-footer{
+display: flex;
+flex-direction: column;
+padding-bottom: 10rem;
+padding-top: 3rem;
+ padding-left: 2.5rem;
+ padding-right: 2.5rem;
+background-color: gray;
+}
+
+.page-footer .footer-heading{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+    padding-bottom: 0.4rem;
+    justify-content: center;
+}
+
+@media(max-width: 500px){
+    .page-footer .footer-heading{
+        font-size: 1.2rem;
+        align-items: center;
+        justify-content: center;       
+    }
+}

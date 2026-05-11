@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --primary-color: rgb(255, 150, 150);
+    --accent-color: rgb(255, 149, 107);
+    --secondary-color: rgb(235, 225, 225);
+    --body-color   : rgba(255, 125, 205, 0.144);
+    --base-color: white;
+    --text-color: black;
+}
+
+*{
+  font-family: Poppins, Segoe UI, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+    min-height: 100vh;
+    background-color: var(--body-color) !important;
+    gap: 3rem;
+    
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebarbtn svg{
+    fill: var(--primary-color);
+    
+}
+
+
+.sidebarbtn svg:hover,
+.shoppingcart svg:hover,
+.searchbtn svg:hover{
+    fill: var(--secondary-color);
+}
+
+nav{
+    background-color: var(--base-color); 
+   
+}
+
+nav ul{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+}
+
+
+nav a{
+padding: 0 0.6rem;
+text-decoration: none;
+color: var(--primary-color);
+font-weight: 600;
+}
+
+nav a:hover{
+    color: var(--secondary-color);
+}
+
+    nav li:first-child{
+    margin-right: auto;
+    font-size: 2rem;
+    font-weight: 600;
+
+}
+
+.offcanvas{
+    background-color: rgba(253, 223, 223, 0.61);
+    backdrop-filter: blur(10px);
+    border: none;
+}
+
+.offcanvas h5{
+    font-family: inherit;
+    color: var(--base-color);
+    font-weight: 600;
+}
+
+.offcanvas-body{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+
+.offcanvas-content a{
+    font-family: inherit;
+    text-decoration: none;
+    padding: 0 0.8rem;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+.offcanvas-content a:hover{
+    color: var(--base-color);
+}
+
+.offcanvas-content ul{
+    list-style: none;
+    padding: 0;
+    
+}
+
+.offcanvas-content li{
+    padding: 0.3rem 0;
+    justify-content: left;
+    align-items: flex-start;
+    
+}
+
+.form-control{
+border: none ;
+box-shadow: none !important;
+} 
+
+.searchbar-container{
+    padding-top: 2rem;
+}
+
+.searchbtn{
+    background-color: white;
+    border: none;
+    border-right: 2px solid var(--primary-color);
+}
+
+.carousel {
+    margin: 1rem auto;
+    margin-bottom: 4rem ;
+    max-width: 99%;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+.carousel-inner {
+    min-height: 400px;
+}
+
+.carousel-item img {
+    width: auto;
+    height: 400px;
+    object-fit: cover;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: var(--base-color);
+}
+
+.carousel-indicators .active {
+    background-color: var(--primary-color);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+@media (max-width: 1100px) {
+
+    .products-container{
+        width: min(37.5rem, 100%);
+
+    }
+    
+}
