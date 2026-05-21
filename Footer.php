@@ -10,25 +10,9 @@
 <body>
     
 
-<footer class="page-footer ">
-
-<div class="footer-content">
-
-<div class="footer-heading text-center mb-3">
-    
-     <h1>DavesList</h1>
-     <p>&copy; 2026 DavesList. All rights reserved.</p>
- </div>
-
- 
 
 
-
-</div>
-
-</div>
-
-
+<footer><p class="text-center justify-content-end">&copy; 2026 DavesList. All rights reserved.</p></footer>
 
 </body>
 </html>

@@ -52,7 +52,7 @@ if(isset($_POST['login'])){
 
             $_SESSION['userName'] = $userLoginData['userName'];
             $_SESSION['uEmail'] = $userLoginData['uEmail'];
-            header('Location: HomePage.php');
+            header('Location: Index.php');
             exit();
         } else {
             $_SESSION['login-register-error'] = 'invalid email or password';
