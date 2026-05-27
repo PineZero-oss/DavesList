@@ -62,8 +62,9 @@ require_once 'userDdconfig.php';
 
 
         <?php
+        $user_id = $_SESSION['user_id'];
         $id = $_GET['book_id'];
-        $editData = $conn->query("SELECT * FROM addbooks WHERE book_Id ='$id'");
+        $editData = $conn->query("SELECT * FROM addbooks WHERE book_Id ='$id' AND user_id = '$user_id'");
 
 
         if ($editData->num_rows > 0) {

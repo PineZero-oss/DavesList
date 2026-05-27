@@ -6,13 +6,14 @@ require_once 'userDdconfig.php';
 //Adding New Book
 if (isset($_POST['addNewBook'])) {
 
+    $user_id = $_SESSION['user_id'];
     $bookname = $_POST['bName'];
     $bookprice = $_POST['bPrice'];
     $bookimage = $_FILES['bImage']['name'];
     $bookgenre = $_POST['bCategory'];
 
-
-    $addNewProduct = $conn->query("INSERT INTO addbooks(bookName, bookPrice, bookImage, Category) VALUES ('$bookname','$bookprice','$bookimage','$bookgenre')");
+    // Added user_id to the insert query
+    $addNewProduct = $conn->query("INSERT INTO addbooks(bookName, bookPrice, bookImage, Category, user_id) VALUES ('$bookname','$bookprice','$bookimage','$bookgenre', '$user_id')");
 
 
     if ($addNewProduct) {
@@ -36,6 +37,7 @@ if (isset($_POST['addNewBook'])) {
 //Modify book data
 if (isset($_POST['editBookData'])) {
 
+    $user_id = $_SESSION['user_id'];
     $eBook_id = $_POST['ebook_id'];
     $eBookname = $_POST['bName'];
     $eBookprice = $_POST['bPrice'];
@@ -53,7 +55,8 @@ if (isset($_POST['editBookData'])) {
 
     }
 
-    $updateBookdata = $conn->query("UPDATE addbooks SET bookName='$eBookname', bookPrice='$eBookprice', bookImage='$updated_files', Category='$eBookgenre' WHERE book_Id='$eBook_id'");
+    
+    $updateBookdata = $conn->query("UPDATE addbooks SET bookName='$eBookname', bookPrice='$eBookprice', bookImage='$updated_files', Category='$eBookgenre' WHERE book_Id='$eBook_id' AND user_id='$user_id'");
 
     if ($updateBookdata) {
 
@@ -81,12 +84,12 @@ if (isset($_POST['editBookData'])) {
 
 if (isset($_POST['deleteBook'])) {
 
+    $user_id = $_SESSION['user_id'];
     $dBookid = $_POST['dBookid'];
     $dBookimage = $_POST['dBookImage'];
 
-
-
-    $deleteBook = $conn->query("DELETE FROM addbooks WHERE book_Id='$dBookid'");
+    // Added ownership check to the delete query
+    $deleteBook = $conn->query("DELETE FROM addbooks WHERE book_Id='$dBookid' AND user_id='$user_id'");
 
     if ($deleteBook) {
         unlink("uploads/" . $dBookimage);

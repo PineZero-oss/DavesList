@@ -7,7 +7,8 @@ $errors = [
 
 $activeForm = $_SESSION['active-form'] ?? 'login';
 
-session_unset();
+// Only clear the error message, don't wipe the whole session
+unset($_SESSION['login-register-error']);
 
 function isActiveForm($formName, $activeForm){
 

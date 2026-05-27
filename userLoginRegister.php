@@ -6,11 +6,15 @@
 session_start();
 require_once 'userDdconfig.php';
 
+
+
 if(isset($_POST['signup'])){
 
     $username = $_POST['userName'];
     $email = $_POST['uEmail'];
     $password = password_hash($_POST['uPassword'], PASSWORD_DEFAULT);
+    $role = $_POST['role'];
+
 
     //check if email already exists in database
     $checkUserEmail = $conn->query("SELECT * FROM users WHERE uEmail = '$email'");
@@ -18,17 +22,17 @@ if(isset($_POST['signup'])){
 
         $_SESSION['login-register-error'] = 'email already exists'; //can be removed 
         $_SESSION['active-form'] = 'signup';
-        header('Location: SignupPage.php');
+        header('Location: userSignup.php');
         exit();
         
         }else{
-            if($conn->query("INSERT INTO users (userName, uEmail, uPassword) VALUES ('$username', '$email', '$password')")){  
-                header('Location: LoginPage.php');
+            if($conn->query("INSERT INTO users (userName, uEmail, uPassword, uRole) VALUES ('$username', '$email', '$password', '$role')")){  
+                header('Location: userLogin.php');
                 exit();
             } else {
                 $_SESSION['login-register-error'] = 'Registration failed: ' . $conn->error;
                 $_SESSION['active-form'] = 'signup';
-                header('Location: SignupPage.php');
+                header('Location: userSignup.php');
                 exit();
             }
         }
@@ -52,7 +56,9 @@ if(isset($_POST['login'])){
 
             $_SESSION['userName'] = $userLoginData['userName'];
             $_SESSION['uEmail'] = $userLoginData['uEmail'];
-            header('Location: Index.php');
+            $_SESSION['user_id'] = $userLoginData['id'];
+            $_SESSION['role'] = $userLoginData['uRole'];
+            header('Location: homepage.php');
             exit();
         } else {
             $_SESSION['login-register-error'] = 'invalid email or password';
@@ -63,6 +69,8 @@ if(isset($_POST['login'])){
 
 
     }
+
+
 
     //if login fails, set error message and redirect back to login page
     $_SESSION['login-register-error'] = 'invalid email or password';

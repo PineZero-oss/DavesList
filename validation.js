@@ -1,6 +1,6 @@
 
 //do not touch IM TELLING YOU NOW FROM THE PAST DAVE
-const form = document.getElementById('signupForm');
+const form = document.getElementById('userSignupForm');
 const usernameInput = document.getElementById('userName-input');
 const emailInput = document.getElementById('uEmail-input');
 const passwordInput = document.getElementById('uPassword-input');

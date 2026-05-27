@@ -3,6 +3,14 @@
 session_start();
 require_once 'userDdconfig.php';
 
+//first change
+if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION['role'] !== 'admin')){
+    header('Location: homepage.php');
+    exit();
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,10 +82,10 @@ require_once 'userDdconfig.php';
         <hr>
 
         <div class="d-grid gap-2">
-          <a href="Index.php" class="btn btn-outline-primary text-start border-0 py-2">
+          <a href="homepage.php" class="btn btn-outline-primary text-start border-0 py-2">
             Home
           </a>
-          <a href="#" class="btn btn-outline-danger text-start border-0 py-2">
+          <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
             Logout
           </a>
         </div>
@@ -106,8 +114,9 @@ require_once 'userDdconfig.php';
           <div class="card-body">
             <h6 class="text-uppercase opacity-75 fw-bold small">Total Inventory</h6>
             <?php
-            $countRes = $conn->query("SELECT COUNT(*) as total FROM addbooks");
-            $countAvg = $conn->query("SELECT AVG(bookPrice) as avgPrice FROM addbooks");
+            $current_user = $_SESSION['user_id'];
+            $countRes = $conn->query("SELECT COUNT(*) as total FROM addbooks WHERE user_id = '$current_user'");
+            $countAvg = $conn->query("SELECT AVG(bookPrice) as avgPrice FROM addbooks WHERE user_id = '$current_user'");
             $total = $countRes->fetch_assoc()['total'] ?? 0;
             $avgPrice = $countAvg->fetch_assoc()['avgPrice'] ?? 0;
             ?>
@@ -162,7 +171,8 @@ require_once 'userDdconfig.php';
           </thead>
           <tbody>
             <?php
-            $addNewProduct = $conn->query("SELECT * FROM addbooks");
+            $current_user = $_SESSION['user_id'];
+            $addNewProduct = $conn->query("SELECT * FROM addbooks WHERE user_id = '$current_user'");
             if ($addNewProduct->num_rows > 0) {
               $count = 1;
               foreach ($addNewProduct as $row) {

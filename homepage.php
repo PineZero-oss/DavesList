@@ -41,8 +41,22 @@ require_once 'userDdconfig.php';
 
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-row justify-content-around align-content-center gap-4">
+        <?php if (isset($_SESSION['userName'])): ?>
+          <li class="nav-item d-flex align-items-center">
+            <span class="navbar-text text-info me-2">Welcome back, <?= htmlspecialchars($_SESSION['userName']) ?>!</span>
+          </li>
+        <?php endif; ?>
+
         <li class="nav-item">
-          <a href="userLogin.php" class="btn btn-primary px-4 shadow-sm">Login</a>
+          <a class="nav-link active" aria-current="page" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z"/></svg></a>
         </li>
 
         <li class="nav-item">
@@ -66,12 +80,32 @@ require_once 'userDdconfig.php';
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <div class="text-center py-4">
-      <h5 class="fw-bold">Greetings, Guest!</h5>
-      <p class="text-muted mb-4">Join the DavesList community to list your own books, manage your cart, and become a partner.</p>
-      <a href="userLogin.php" class="btn btn-primary w-100 mb-2">Login</a>
-      <a href="userSignup.php" class="btn btn-outline-secondary w-100">Sign Up</a>
-    </div>
+    <?php if (isset($_SESSION['userName'])): ?>
+      <div class="text-center mb-4">
+        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 64px; height: 64px;">
+          <span class="fs-2 fw-bold"><?= strtoupper(substr($_SESSION['userName'], 0, 1)) ?></span>
+        </div>
+        <h5 class="fw-bold mb-0"><?= htmlspecialchars($_SESSION['userName']) ?></h5>
+        <p class="text-muted small"><?= htmlspecialchars($_SESSION['uEmail']) ?></p>
+      </div>
+      
+      <hr>
+
+      <div class="d-grid gap-2">
+        <a href="SellerDashboard.php" class="btn btn-outline-primary text-start border-0 py-2">
+          Seller Dashboard
+        </a>
+        <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
+          Logout
+        </a>
+      </div>
+    <?php else: ?>
+      <div class="text-center py-4">
+        <p class="text-muted mb-4">You are not logged in.</p>
+        <a href="LoginPage.php" class="btn btn-primary w-100 mb-2">Login</a>
+        <a href="SignupPage.php" class="btn btn-outline-secondary w-100">Sign Up</a>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -85,7 +119,7 @@ require_once 'userDdconfig.php';
       <div class="carousel-inner"> <div class="carousel-item active"> <img src="raw/indexBannerimg1.jpg" class="d-block w-100" alt="bannerimg">
        <div class="container"> 
         <div class="carousel-caption text-start"> <h1>Want to sell your Books?.</h1>
-         <p class="opacity-75">Sign up now and become a partner.</p>
+         <p class="opacity-75">Sign up now and become a partner.</p> <p><a class="btn btn-lg btn-outline-light" href="#">Sign up today</a></p>
      </div> 
     </div> 
   </div> 
@@ -151,6 +185,8 @@ require_once 'userDdconfig.php';
           <h5 class="card-title"><?= htmlspecialchars($row['bookName']) ?></h5>
           <p class="card-price">R<?= number_format($row['bookPrice'],2) ?></p>
           <p class="card-text"><span class="badge rounded-pill text-bg-warning text-white"><?= htmlspecialchars($row['Category']) ?></span></p>
+          <a href="#" class="btn btn-outline-primary">Add to cart</a>
+          <a href="#" class="btn btn-outline-danger">Flag</a>
         </div>
       </div>
     </div>
