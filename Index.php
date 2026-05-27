@@ -1,3 +1,16 @@
+<?php
+session_start();
+require_once 'userDdconfig.php';
+
+ $sql = "SELECT * FROM addbooks";
+ if (isset($_GET['category']) && $_GET['category'] !== '') {
+    $category = $conn->real_escape_string($_GET['category']);
+    $sql .= " WHERE Category = '$category'";
+ }
+?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +41,11 @@
 
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-row justify-content-around align-content-center gap-4">
+        <?php if (isset($_SESSION['userName'])): ?>
+          <li class="nav-item d-flex align-items-center">
+            <span class="navbar-text text-white me-2">Welcome, <?= htmlspecialchars($_SESSION['userName']) ?></span>
+          </li>
+        <?php endif; ?>
 
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></a>
@@ -62,7 +80,32 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <p>Profile Controlls to be added here.</p>
+    <?php if (isset($_SESSION['userName'])): ?>
+      <div class="text-center mb-4">
+        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 64px; height: 64px;">
+          <span class="fs-2 fw-bold"><?= strtoupper(substr($_SESSION['userName'], 0, 1)) ?></span>
+        </div>
+        <h5 class="fw-bold mb-0"><?= htmlspecialchars($_SESSION['userName']) ?></h5>
+        <p class="text-muted small"><?= htmlspecialchars($_SESSION['uEmail']) ?></p>
+      </div>
+      
+      <hr>
+
+      <div class="d-grid gap-2">
+        <a href="SellerDashboard.php" class="btn btn-outline-primary text-start border-0 py-2">
+          Seller Dashboard
+        </a>
+        <a href="LoginPage.php" class="btn btn-outline-danger text-start border-0 py-2">
+          Logout
+        </a>
+      </div>
+    <?php else: ?>
+      <div class="text-center py-4">
+        <p class="text-muted mb-4">You are not logged in.</p>
+        <a href="LoginPage.php" class="btn btn-primary w-100 mb-2">Login</a>
+        <a href="SignupPage.php" class="btn btn-outline-secondary w-100">Sign Up</a>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -101,68 +144,68 @@
   </div>
 </section>
 
-<br>
-  <!-- cards to display products-->
-
-  
- <div class="container products-container my-4 py-5 align-center justify-content-center">
-
-  <div class="row">
-    <!-- Card 1 -->
-    <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100">
-        <img src="raw/SigninBackground.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-price">R</p>
-          <a href="#" class="btn btn-primary">Add to cart</a>
-        </div>
-      </div>
+<div class="container my-5">
+ <!--  <h2 class="text-center text-uppercase fw-bold mb-4">Featured Books</h2>
+  Placeholder for a featured books section - could be a carousel or a few highlighted cards -->
+ <!-- <div class="row mb-5">
+    <div class="col-12 text-center">
+      <p class="text-muted">Discover our hand-picked selection of amazing reads!</p>
     </div>
+  </div> -->
 
-    <!-- Card 2 -->
-    <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100" >
-        <img src="raw/SigninBackground.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-price">R</p>
-          <a href="#" class="btn btn-primary">Add to cart</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- product item -->
-    <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100" >
-        <img src="raw/SigninBackground.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-         <h5 class="card-title">Card title</h5>
-          <p class="card-price">R</p>
-          <a href="#" class="btn btn-primary">Add to cart</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- product item -->
-    <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100" >
-        <img src="raw/SigninBackground.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-         <h5 class="card-title">Card title</h5>
-          <p class="card-price">R</p>
-          <a href="#" class="btn btn-primary">Add to cart</a>
-        </div>
-      </div>
-    </div>
-
+  <h2 class="text-center text-uppercase fw-bold mb-4">Browse by Category</h2>
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+    <a href="Index.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
+    <a href="Index.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
+    <a href="Index.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>
+    <a href="Index.php?category=Thriller" class="btn btn-outline-secondary rounded-pill">Thriller</a>
+    <a href="Index.php?category=Horror" class="btn btn-outline-secondary rounded-pill">Horror</a>
+    <a href="Index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
+    <a href="Index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
+    <a href="Index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
+    <a href="Index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
   </div>
-
 </div>
 
+ <div class="container products-container pb-5">
+ <!-- #region-->
+ <div class="row">
+
+ <?php 
  
 
-<footer><p class="text-center">&copy; 2026 DavesList. All rights reserved.</p></footer>
+ $displayBooks = $conn->query($sql);
+ if($displayBooks->num_rows > 0){
+  foreach($displayBooks as $row){
+?>
+    <div class="col-12 col-md-4 mb-3">
+      <div class="card h-100">
+        <img src="<?= htmlspecialchars("uploads/" . $row['bookImage']) ?>" class="card-img-top" alt="Book cover">
+        <div class="card-body">
+          <h5 class="card-title"><?= htmlspecialchars($row['bookName']) ?></h5>
+          <p class="card-price">R<?= number_format($row['bookPrice'],2) ?></p>
+          <p class="card-text"><span class="badge rounded-pill text-bg-warning text-white"><?= htmlspecialchars($row['Category']) ?></span></p>
+          <a href="#" class="btn btn-outline-primary">Add to cart</a>
+          <a href="#" class="btn btn-outline-danger">Flag</a>
+        </div>
+      </div>
+    </div>
+<?php
+    }
+  }
+ ?>
+    </div>
+ </div>
+
+<footer>
+  <div class="container py-4">
+    <p class="text-center text-muted m-0">&copy; 2026 DavesList. All rights reserved.</p>
+    <div class="text-center mt-2">
+      <a href="#" class="text-muted text-decoration-none mx-2">Privacy Policy</a>
+      <a href="#" class="text-muted text-decoration-none mx-2">Terms of Service</a>
+    </div>
+  </div>
+</footer>
 
   <script src="js/bootstrap.bundle.min.js"></script>
 

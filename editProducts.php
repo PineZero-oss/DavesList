@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require_once 'userDdconfig.php';
 
 
 
@@ -58,43 +59,84 @@ session_start();
 
 
 
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <section class="p-4 p-md-5 border border-3 rounded sectionBorder shadow-sm bg-white">
-                    <form class="" action="addProductsDb.php" method="post" enctype="multipart/form-data">
-                        <h1 class="text-center text-uppercase mb-4">Edit Products</h1>
 
-                        <div class="mb-3">
-                            <label for="bookname" class="form-label">Book Name</label>
-                            <input type="text" class="form-control" name="bName" id="bookname" placeholder="Book Name"
-                                required>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="pricelisting" class="form-label">Price Listing </label>
-                            <input type="text" class="form-control" name="bPrice" id="pricelisting"
-                                placeholder="Book Price (e.g) R100" required>
-                        </div>
+        <?php
+        $id = $_GET['book_id'];
+        $editData = $conn->query("SELECT * FROM addbooks WHERE book_Id ='$id'");
 
-                        <div class="mb-3">
-                            <label class="form-label" for="inputGroupFile01">Upload Image</label>
-                            <input type="file" class="form-control" name="bImage" id="inputGroupFile01" required>
-                        </div>
 
-                        <div class="mb-4">
-                            <label for="pricelisting" class="form-label">Genre</label>
-                            <input type="text" class="form-control" id="pricelisting" name="bCategory"
-                                placeholder="Category (e.g Fantasy)" required>
-                        </div>
+        if ($editData->num_rows > 0) {
+            foreach ($editData as $row) {
 
-                        <div class="text-center">
-                            <button type="submit" name="addNewBook"
-                                class="btn btn-outline-warning w-100 py-2">Edit</button>
-                        </div>
-                    </form>
-                </section>
-            </div>
-        </div>
+                ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <section class="p-4 p-md-5 border border-3 rounded sectionBorder shadow-sm bg-white">
+                            <form class="" action="addProductsDb.php" method="post" enctype="multipart/form-data">
+                                <h1 class="text-center text-uppercase mb-4">Edit Products</h1>
+
+                                <input type="hidden" name="ebook_id" value="<?php echo $row['book_Id'] ?>">
+
+                                <div class="mb-3">
+                                    <label for="bookname" class="form-label">Book Name</label>
+                                    <input type="text" class="form-control" name="bName" value="<?php echo $row['bookName'] ?>"
+                                        id="bookname" placeholder="Book Name" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="pricelisting" class="form-label">Price Listing </label>
+                                    <input type="text" class="form-control" name="bPrice" id="pricelisting"
+                                        value="<?php echo $row['bookPrice'] ?>" placeholder="Book Price (e.g) R100" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="inputGroupFile01">Upload Image</label>
+                                    <input type="file" class="form-control" name="bImage" id="inputGroupFile01">
+                                    <input type="hidden" name="old_image" value="<?php echo $row['bookImage']; ?>">
+                                    <img src="<?php echo "uploads/" . $row['bookImage']; ?>" width="75" alt="Book Cover">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="pricelisting" class="form-label">Genre</label>
+                                    <input type="text" class="form-control" id="pricelisting" name="bCategory"
+                                        value="<?php echo $row['Category'] ?>" placeholder="Category (e.g Fantasy)" required>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" name="editBookData"
+                                        class="btn btn-outline-warning w-100 py-2">Edit</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+
+                <?php
+
+
+
+
+
+            }
+
+        } else {
+
+            echo "No data found";
+
+
+
+        }
+
+
+        ?>
+
+
+
+
+
+
+
     </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>

@@ -2,6 +2,11 @@
 
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: LoginPage.php');
+    exit();
+}
+
 
 
 
@@ -73,7 +78,7 @@ session_start();
                         <div class="mb-3">
                             <label for="pricelisting" class="form-label">Price Listing </label>
                             <input type="text" class="form-control" name="bPrice" id="pricelisting"
-                                placeholder="Book Price (e.g) R100" required>
+                                placeholder="Book Price (e.g) 100" required>
                         </div>
 
                         <div class="mb-3">
