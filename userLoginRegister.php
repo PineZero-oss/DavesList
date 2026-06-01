@@ -40,7 +40,6 @@ if(isset($_POST['signup'])){
   
 }
 
-
 if(isset($_POST['login'])){
 
     $email = $_POST['uEmail'];
@@ -70,20 +69,36 @@ if(isset($_POST['login'])){
             header('Location: userLogin.php');
             exit();
         }
-
-        
-
-
     }
-
-
 
     //if login fails, set error message and redirect back to login page
     $_SESSION['login-register-error'] = 'invalid email or password';
     $_SESSION['active-form'] = 'login';
     header('Location: userLogin.php');
     exit();
-    
 }
+
+//handle user deletion by admin
+ if(isset($_POST['deleteUser'])){
+
+    $dusername = $_POST['dusername'];
+    $duserEmail = $_POST['duserEmail'];
+    $user_id = $_POST['deleteUser'];
+    
+    $deleteUserId = "DELETE FROM users WHERE id = '$user_id' AND userName = '$dusername' AND uEmail = '$duserEmail'";
+    if($conn->query($deleteUserId)){
+        $_SESSION['dstatus'] = "user deleted successfully";
+        header('Location: userManagement.php');
+        exit();
+    } else {
+        $_SESSION['dstatus'] = "failed to delete user: " . $conn->error;
+        header('Location: userManagement.php');
+        exit();
+    }
+
+
+    }
+
+
 
 ?>

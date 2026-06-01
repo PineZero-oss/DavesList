@@ -161,8 +161,8 @@ require_once 'userDdconfig.php';
     </div>
   </div> -->
 
-  <h2 class="text-center text-uppercase fw-bold mb-4">Browse by Category</h2>
-  <div class="d-flex sticky-bottom flex-wrap justify-content-center gap-3 mb-5">
+  <h2 class="text-center text-uppercase fw-bold mb-4 ">Browse by Category</h2>
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
     <a href="Index.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
     <a href="Index.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
     <a href="Index.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>

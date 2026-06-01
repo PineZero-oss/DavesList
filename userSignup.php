@@ -38,12 +38,21 @@ require_once 'userDdconfig.php';
    
     <div class="container my-5">
         <div class="row justify-content-center">
+
+        <?php if (isset($_SESSION['login-register-error'])): ?>
+
+                        <div class="alert alert-warning" role="alert">
+                            <?= $_SESSION['login-register-error'] ?>
+                        </div>
+
+                    <?php endif; ?>
+                    <?php unset($_SESSION['login-register-error']); ?>
+
+                    
             <div class="col-md-8 col-lg-6">
                 <section class="p-4 p-md-5 border border-3 rounded sectionBorder shadow-sm bg-white">
                     <form class="" id="userSigupForm" action="userLoginRegister.php" method="post">
                         <h1 class="text-center text-uppercase mb-4">sign up</h1>
-
-                        <p id="error-message"></p>
 
                         <div class="mb-3">
                             <label for="username" class="form-label">username</label>
@@ -77,7 +86,7 @@ require_once 'userDdconfig.php';
                                 <option value="" selected>choose role...</option>
                                 <option value="buyer">buyer</option>
                                 <option value="seller">seller</option>
-                                <option value="admin">admin</option>
+                                <option disabled value="admin">admin</option>
                             </select>
             
                         </div>

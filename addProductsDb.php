@@ -37,7 +37,7 @@ if (isset($_POST['addNewBook'])) {
 //Modify book data
 if (isset($_POST['editBookData'])) {
 
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id']; 
     $eBook_id = $_POST['ebook_id'];
     $eBookname = $_POST['bName'];
     $eBookprice = $_POST['bPrice'];
