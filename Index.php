@@ -2,14 +2,22 @@
 session_start();
 require_once 'userDdconfig.php';
 
+//category filter
  $sql = "SELECT * FROM addbooks";
  if (isset($_GET['category']) && $_GET['category'] !== '') {
     $category = $conn->real_escape_string($_GET['category']);
     $sql .= " WHERE Category = '$category'";
  }
+
+ //search functionality
+ if (isset($_GET['searchBook']) && $_GET['searchBook'] !== '') {
+    $searchBook = $conn->real_escape_string($_GET['searchBook']);
+    $sql .= " WHERE BookName LIKE '%$searchBook%' OR Category LIKE '%$searchBook%'";
+ }
+ 
+
+
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -32,8 +40,9 @@ require_once 'userDdconfig.php';
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <br>
-         <form class="d-flex gap-1" role="search">
-        <input class="form-control me-auto" type="search" placeholder="Search" aria-label="Search"/>
+
+         <form class="d-flex gap-1" role="search" method="get">
+        <input class="form-control me-auto" type="search" placeholder="Search book..." aria-label="Search" name="searchBook"/>
         <button class="btn btn-outline-secondary" type="submit">Search</button>
       </form>
 
@@ -129,6 +138,7 @@ require_once 'userDdconfig.php';
     <a href="Index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
     <a href="Index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
     <a href="Index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
+    <a href="Index.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
     <a href="Index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
   </div>
 </div>

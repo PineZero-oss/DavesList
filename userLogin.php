@@ -25,7 +25,7 @@ require_once 'userDdconfig.php';
             <a class="navbar-brand text-uppercase fw-bold fs-3" href="#">DavesList</a>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-row justify-content-around align-content-center gap-3">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="SellerDashboard.php">
+                    <a class="nav-link active" aria-current="page" href="Index.php">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                             fill="#ff9696">
                             <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
@@ -35,11 +35,21 @@ require_once 'userDdconfig.php';
             </ul>
         </div>
     </nav>
-   
+
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <section class="p-4 p-md-5 border border-3 rounded sectionBorder shadow-sm bg-white">
+
+                    <?php if (isset($_SESSION['login-register-error'])): ?>
+
+                        <div class="alert alert-warning" role="alert">
+                            <?= $_SESSION['login-register-error'] ?>
+                        </div>
+
+                    <?php endif; ?>
+                    <?php unset($_SESSION['login-register-error']); ?>
+
                     <form class="" action="userLoginRegister.php" method="post">
                         <h1 class="text-center text-uppercase mb-4">login</h1>
 
@@ -48,7 +58,6 @@ require_once 'userDdconfig.php';
                             <input type="email" class="form-control" name="uEmail" id="uEmail-input"
                                 placeholder="enter email" required>
                         </div>
-
 
                         <div class="mb-4">
                             <label for="userpassword" class="form-label">password</label>

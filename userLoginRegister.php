@@ -52,20 +52,26 @@ if(isset($_POST['login'])){
 
         $userLoginData = $result->fetch_assoc();
         //verify password used to check if it matches the hashed password in the database
-        if(password_verify($password, $userLoginData['uPassword'])){
+        if(password_verify($password, $userLoginData['uPassword']) && $userLoginData['uEmail'] === $email) {
 
             $_SESSION['userName'] = $userLoginData['userName'];
             $_SESSION['uEmail'] = $userLoginData['uEmail'];
             $_SESSION['user_id'] = $userLoginData['id'];
             $_SESSION['role'] = $userLoginData['uRole'];
-            header('Location: homepage.php');
+            if($_SESSION['role'] === 'admin') {
+                header('Location: adminPage.php');
+            } else {
+                header('Location: homepage.php');
+            }
+
             exit();
         } else {
             $_SESSION['login-register-error'] = 'invalid email or password';
-            $_SESSION['active-form'] = 'login';
-            header('Location: LoginPage.php');
+            header('Location: userLogin.php');
             exit();
         }
+
+        
 
 
     }
@@ -75,7 +81,7 @@ if(isset($_POST['login'])){
     //if login fails, set error message and redirect back to login page
     $_SESSION['login-register-error'] = 'invalid email or password';
     $_SESSION['active-form'] = 'login';
-    header('Location: LoginPage.php');
+    header('Location: userLogin.php');
     exit();
     
 }

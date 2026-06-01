@@ -1,12 +1,19 @@
 <?php
 session_start();
 require_once 'userDdconfig.php';
-
+//category filter
  $sql = "SELECT * FROM addbooks";
  if (isset($_GET['category']) && $_GET['category'] !== '') {
     $category = $conn->real_escape_string($_GET['category']);
     $sql .= " WHERE Category = '$category'";
  }
+//search functionality
+ if (isset($_GET['searchBook']) && $_GET['searchBook'] !== '') {
+    $searchBook = $conn->real_escape_string($_GET['searchBook']);
+    $sql .= " WHERE bookName LIKE '%$searchBook%' OR Category LIKE '%$searchBook%'";
+ }
+ 
+
 ?>
 
 
@@ -32,8 +39,9 @@ require_once 'userDdconfig.php';
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <br>
-         <form class="d-flex gap-1" role="search">
-        <input class="form-control me-auto" type="search" placeholder="Search" aria-label="Search"/>
+
+         <form class="d-flex gap-1" role="search" method="get">
+        <input class="form-control me-auto" type="search" placeholder="Search book..." aria-label="Search" name="searchBook"/>
         <button class="btn btn-outline-secondary" type="submit">Search</button>
       </form>
 
@@ -118,8 +126,8 @@ require_once 'userDdconfig.php';
 
       <div class="carousel-inner"> <div class="carousel-item active"> <img src="raw/indexBannerimg1.jpg" class="d-block w-100" alt="bannerimg">
        <div class="container"> 
-        <div class="carousel-caption text-start"> <h1>Want to sell your Books?.</h1>
-         <p class="opacity-75">Sign up now and become a partner.</p> <p><a class="btn btn-lg btn-outline-light" href="#">Sign up today</a></p>
+        <div class="carousel-caption text-start"> <h1>Don't know what to read?.</h1>
+         <p class="opacity-75">Check out our curated selection!</p> 
      </div> 
     </div> 
   </div> 
@@ -163,6 +171,7 @@ require_once 'userDdconfig.php';
     <a href="Index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
     <a href="Index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
     <a href="Index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
+    <a href="Index.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
     <a href="Index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
   </div>
 </div>
