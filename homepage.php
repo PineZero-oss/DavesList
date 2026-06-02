@@ -60,7 +60,7 @@ require_once 'userDdconfig.php';
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
+          <a class="nav-link" href="cart.php"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
         </li>
 
         <li class="nav-item">
@@ -163,16 +163,16 @@ require_once 'userDdconfig.php';
 
   <h2 class="text-center text-uppercase fw-bold mb-4 ">Browse by Category</h2>
   <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
-    <a href="Index.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
-    <a href="Index.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
-    <a href="Index.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>
-    <a href="Index.php?category=Thriller" class="btn btn-outline-secondary rounded-pill">Thriller</a>
-    <a href="Index.php?category=Horror" class="btn btn-outline-secondary rounded-pill">Horror</a>
-    <a href="Index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
-    <a href="Index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
-    <a href="Index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
-    <a href="Index.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
-    <a href="Index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
+    <a href="homepage.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
+    <a href="homepage.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
+    <a href="homepage.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>
+    <a href="homepage.php?category=Thriller" class="btn btn-outline-secondary rounded-pill">Thriller</a>
+    <a href="homepage.php?category=Horror" class="btn btn-outline-secondary rounded-pill">Horror</a>
+    <a href="homepage.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
+    <a href="homepage.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
+    <a href="homepage.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
+    <a href="homepage.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
+    <a href="homepage.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
   </div>
 </div>
 
@@ -189,12 +189,17 @@ require_once 'userDdconfig.php';
 ?>
     <div class="col-12 col-md-4 mb-3">
       <div class="card h-100">
+        
         <img src="<?= htmlspecialchars("uploads/" . $row['bookImage']) ?>" class="card-img-top" alt="Book cover">
         <div class="card-body">
           <h5 class="card-title"><?= htmlspecialchars($row['bookName']) ?></h5>
           <p class="card-price">R<?= number_format($row['bookPrice'],2) ?></p>
           <p class="card-text"><span class="badge rounded-pill text-bg-warning text-white"><?= htmlspecialchars($row['Category']) ?></span></p>
-          <a href="#" class="btn btn-outline-primary">Add to cart</a>
+          <form method="post" action="addToCart.php" class="d-inline">
+            <input type="hidden" name="book_id" value="<?= htmlspecialchars($row['book_Id']) ?>">
+            <button type="submit" class="btn btn-outline-primary">Add to cart</button>
+          </form>
+        
           <a href="#" class="btn btn-outline-danger">Flag</a>
         </div>
       </div>
