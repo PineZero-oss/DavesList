@@ -41,7 +41,7 @@ $cart = $_SESSION['cart'] ?? [];
     <?php else: ?>
       <div class="row gx-4 gy-4">
         <div class="col-12 col-xl-8">
-          <div class="list-group shadow-sm rounded-4 overflow-hidden">
+          <div class="list-group shadow-lg rounded-4 overflow-hidden">
             <?php
             $total = 0.0;
             foreach ($cart as $book_id => $qty):
