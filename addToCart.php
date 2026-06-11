@@ -7,6 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+if (isset($_POST['clearCart'])) {
+    unset($_SESSION['cart']);
+    $_SESSION['cart_message'] = 'Cart cleared successfully.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'homepage.php'));
+    exit();
+}
+
 $book_id = isset($_POST['book_id']) ? intval($_POST['book_id']) : 0;
 
 
@@ -36,10 +43,10 @@ $_SESSION['cart_message'] = 'Added to cart.';
 header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'homepage.php'));
 exit();
 
-if(isset($_POST['clearCart'])) {
-    unset($_SESSION['cart']);
-    header('Location: homepage.php');
-    exit();
-}
-
 ?>
+
+
+
+
+
+ 
