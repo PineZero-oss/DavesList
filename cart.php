@@ -3,6 +3,7 @@ session_start();
 require_once 'userDdconfig.php';
 
 $cart = $_SESSION['cart'] ?? [];
+$bookNames = [];
 
 ?>
 <!DOCTYPE html>
@@ -52,6 +53,7 @@ $cart = $_SESSION['cart'] ?? [];
               if ($row = $res->fetch_assoc()) {
                 $line = $row['bookPrice'] * $qty;
                 $total += $line;
+                $bookNames[] = $row['bookName'];
                 ?>
                 <div class="list-group-item cart-item p-3 border-0">
                   <div class="row g-3 align-items-center">
@@ -84,11 +86,17 @@ $cart = $_SESSION['cart'] ?? [];
                 <span>Items</span>
                 <span><?= count($cart) ?></span>
               </div>
+              <div class="d-flex justify-content-between mb-2 text-muted">
+                <span>Book names</span>
+                <span><?= htmlspecialchars(implode(', ', array_unique($bookNames))) ?></span>
+              </div>
               <div class="d-flex justify-content-between align-items-center mb-4">
                 <span class="fw-semibold">Total</span>
                 <span class="fs-4 fw-bold">R<?= number_format($total, 2) ?></span>
               </div>
-              <a href="#" class="btn btn-primary w-100 rounded-pill mb-2">Checkout</a>
+              <form action="ViewOrders.php" method="post" name="checkout" >
+                 <a href="checkout.php" class="btn btn-primary w-100 rounded-pill mb-2">Checkout</a>
+              </form>
               <a href="homepage.php" class="btn btn-outline-secondary w-100 rounded-pill mb-2">Continue shopping</a>
               <form method="post" action="addToCart.php">
                 <button type="submit" name="clearCart" value="1" class="btn btn-outline-danger w-100 rounded-pill">Clear

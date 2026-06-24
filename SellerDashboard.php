@@ -23,7 +23,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
   <title>ProductPage</title>
 </head>
 
-<body>
+<body class="bg-bg-gradient" style="background: linear-gradient(to right, #f8f9fa, #e9ecef);">
 
   <nav class="navbar navbar-expand-lg bg-body-tertiary py-4 ">
     <div class="container-fluid h-75">
@@ -85,6 +85,9 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
           <a href="homepage.php" class="btn btn-outline-primary text-start border-0 py-2">
             Home
           </a>
+          <a href="ViewOrders.php" class="btn btn-outline-secondary text-start  border-0 py-2">
+            View Orders
+          </a>
           <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
             Logout
           </a>
@@ -104,12 +107,14 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
   <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2 class="text-uppercase fw-bold m-0">Seller Dashboard</h2>
-      <a href="AddProduct.php" class="btn btn-primary shadow-sm px-4">Add New Book</a>
+      <a href="AddProduct.php" class="btn btn-primary shadow-sm px-4">Add Book</a>
     </div>
+   
+
 
     <!-- Summary Cards -->
     <div class="row g-4 mb-5">
-      <div class="col-12 col-sm-6 col-xl-4">
+      <div class="col-12 col-sm-6 col-xl-4 ">
         <div class="card border-0 shadow-sm bg-primary text-white h-100">
           <div class="card-body">
             <h6 class="text-uppercase opacity-75 fw-bold small">Total Inventory</h6>
@@ -125,7 +130,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
         </div>
       </div>
       <div class="col-12 col-sm-6 col-xl-4">
-        <div class="card border-0 shadow-sm bg-white h-100 border-start border-4 border-warning">
+        <div class="card border-0 shadow-sm bg-white h-100 border-start border-4">
           <div class="card-body">
             <h6 class="text-uppercase text-muted fw-bold small">Active Listings</h6>
             <h2 class="mb-0 fw-bold"><?= $total ?> Listed</h2>
@@ -133,7 +138,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
         </div>
       </div>
       <div class="col-12 col-sm-6 col-xl-4">
-        <div class="card border-0 shadow-sm bg-white h-100 border-start border-4 border-success">
+        <div class="card border-0 shadow-sm bg-white h-100 border-start border-4">
           <div class="card-body">
             <h6 class="text-uppercase text-muted fw-bold small">Avg. Listing Price</h6>
             <h2 class="mb-0 fw-bold">R<?= number_format($avgPrice, 2) ?></h2>
@@ -158,7 +163,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
 
     <div class="card shadow-sm border-0">
       <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
+        <table class="table table-hover align-middle mb-0 shadow-lg">
           <thead class="table-light">
             <tr>
               <th scope="col" class="ps-4">#</th>

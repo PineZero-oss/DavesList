@@ -57,17 +57,24 @@ if(isset($_POST['login'])){
             $_SESSION['uEmail'] = $userLoginData['uEmail'];
             $_SESSION['user_id'] = $userLoginData['id'];
             $_SESSION['role'] = $userLoginData['uRole'];
-            if($_SESSION['role'] === 'admin') {
-                header('Location: adminPage.php');
-            } else {
-                header('Location: homepage.php');
+            
+            switch ($_SESSION['role']) {
+                case 'admin':
+                    header('Location: adminPage.php');
+                    break;
+                case 'seller':
+                    header('Location: homepage.php');
+                    break;
+                case 'buyer':
+                    header('Location: homepage.php');
+                    break;
+                default:
+                    $_SESSION['login-register-error'] = 'invalid email or password';
+                     header('Location: userLogin.php');
+                    break;
             }
-
-            exit();
-        } else {
-            $_SESSION['login-register-error'] = 'invalid email or password';
-            header('Location: userLogin.php');
-            exit();
+            exit();   
+            
         }
     }
 
