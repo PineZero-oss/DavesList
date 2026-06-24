@@ -103,6 +103,9 @@ require_once 'userDdconfig.php';
         <a href="SellerDashboard.php" class="btn btn-outline-primary text-start border-0 py-2">
           Seller Dashboard
         </a>
+        <a href="ViewOrders.php" class="btn btn-outline-warning text-start border-0 py-2">
+          View Orders
+        </a>
         <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
           Logout
         </a>

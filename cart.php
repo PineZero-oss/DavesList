@@ -2,8 +2,13 @@
 session_start();
 require_once 'userDdconfig.php';
 
-$cart = $_SESSION['cart'] ?? [];
-$bookNames = [];
+$user_id = $_SESSION['user_id'] ?? null;
+if (!$user_id) {
+    header('Location: userLoginRegister.php');
+    exit();
+}
+$cart_key = 'cart_' . $user_id;
+$cart = $_SESSION[$cart_key] ?? [];
 
 ?>
 <!DOCTYPE html>
@@ -68,6 +73,9 @@ $bookNames = [];
                         <span>Quantity: <strong><?= intval($qty) ?></strong></span>
                       </div>
                       <p class="mb-0 fw-semibold">Line total: R<?= number_format($line, 2) ?></p>
+                      <div class="mt-3">
+  
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -94,9 +102,9 @@ $bookNames = [];
                 <span class="fw-semibold">Total</span>
                 <span class="fs-4 fw-bold">R<?= number_format($total, 2) ?></span>
               </div>
-              <form action="ViewOrders.php" method="post" name="checkout" >
-                 <a href="checkout.php" class="btn btn-primary w-100 rounded-pill mb-2">Checkout</a>
-              </form>
+              <!-- check href of viewOrders -->
+              <a href="ViewOrders.php" class="btn btn-info text-white w-100 rounded-pill mb-2">view orders</a>
+              <a href="checkOut.php" class="btn btn-outline-primary w-100 rounded-pill mb-2"> checkout</a>
               <a href="homepage.php" class="btn btn-outline-secondary w-100 rounded-pill mb-2">Continue shopping</a>
               <form method="post" action="addToCart.php">
                 <button type="submit" name="clearCart" value="1" class="btn btn-outline-danger w-100 rounded-pill">Clear
