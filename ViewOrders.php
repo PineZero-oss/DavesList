@@ -83,13 +83,13 @@ $hasOrder = !empty($orders);
         <div class="col-6 col-md-3">
             <div class="card p-3 text-center">
                 <div class="text-muted">Books</div>
-                <div class="h4 mb-0"><?= count($orders) ?></div>
+                <div class="h4 mb-0"><?= $hasOrder ? count($orders) : 0 ?></div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="card p-3 text-center">
                 <div class="text-muted">Total quantity</div>
-                <div class="h4 mb-0"><?= $totalItems ?></div>
+                <div class="h4 mb-0"><?= $hasOrder ? $totalItems : 0 ?></div>
             </div>
         </div>
         <div class="col-6 col-md-3">
