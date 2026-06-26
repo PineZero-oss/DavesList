@@ -7,25 +7,34 @@ if (!$user_id) {
     header('Location: userLoginRegister.php');
     exit();
 }
-$totalItems = 0;
-$totalSpent = 0.0;
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_order'])) {
+    $order_id = (int) $_POST['accept_order'];
+    $acceptStmt = $conn->prepare("UPDATE orders SET status = 'Accepted' WHERE id = ? AND seller_id = ?");
+    $acceptStmt->bind_param('ii', $order_id, $user_id);
+    $acceptStmt->execute();
+    $acceptStmt->close();
+    $successMessage = 'Order accepted successfully.';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelled_order'])) {
+    $order_id = (int) $_POST['cancelled_order'];
+    $cancelStmt = $conn->prepare("UPDATE orders SET status = 'Cancelled' WHERE id = ? AND seller_id = ?");
+    $cancelStmt->bind_param('ii', $order_id, $user_id);
+    $cancelStmt->execute();
+    $cancelStmt->close();
+    $successMessage = 'Order cancelled successfully.';
+}
+
+$ordersStmt = $conn->prepare("SELECT id, buyer_id, book_id, book_name, book_price, qty, total, image_path, status, created_at FROM orders WHERE seller_id = ? ORDER BY created_at DESC");
+$ordersStmt->bind_param('i', $user_id);
+$ordersStmt->execute();
+$ordersResult = $ordersStmt->get_result();
+
 $orders = [];
-
-$stmt = $conn->prepare("SELECT id, book_name, book_price, qty, total, image_path, status, created_at FROM orders WHERE buyer_id = ? ORDER BY created_at DESC");
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$res = $stmt->get_result();
-
-while ($row = $res->fetch_assoc()) {
-    $status = $row['status'];
-    if ($status === 'Accepted') {
-        $displayStatus = 'Accepted';
-    } elseif ($status === 'Cancelled') {
-        $displayStatus = 'Cancelled';
-    } else {
-        $displayStatus = 'Pending';
-    }
-
+while ($row = $ordersResult->fetch_assoc()) {
     $orders[] = [
         'id' => (int) $row['id'],
         'name' => $row['book_name'],
@@ -33,18 +42,36 @@ while ($row = $res->fetch_assoc()) {
         'qty' => (int) $row['qty'],
         'total' => (float) $row['total'],
         'image' => !empty($row['image_path']) ? 'uploads/' . $row['image_path'] : '',
-        'status' => $displayStatus,
-        'date' => date('Y-m-d', strtotime($row['created_at']))
+        'status' => $row['status'],
+        'date' => date('Y-m-d', strtotime($row['created_at'])),
+        'buyer_id' => (int) $row['buyer_id']
     ];
-    $totalItems += (int) $row['qty'];
-    $totalSpent += (float) $row['total'];
 }
-$stmt->close();
+$ordersStmt->close();
 
 $hasOrder = !empty($orders);
+$totalItems = 0;
+$totalSpent = 0.0;
+$pendingCount = 0;
+$acceptedCount = 0;
+$cancelledCount = 0;
 
+if ($hasOrder) {
+    foreach ($orders as $order) {
+        $totalItems += intval($order['qty']);
+        $totalSpent += floatval($order['total']);
 
-
+        if (strtolower($order['status']) === 'pending') {
+            $pendingCount++;
+        }
+        if (strtolower($order['status']) === 'accepted') {
+            $acceptedCount++;
+        }
+        if (strtolower($order['status']) === 'cancelled') {
+            $cancelledCount++;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +80,7 @@ $hasOrder = !empty($orders);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
+    <title>Orders Received</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -80,10 +107,6 @@ $hasOrder = !empty($orders);
         .stats .card {
             border-radius: .5rem
         }
-
-        .no-select {
-            user-select: none
-        }
     </style>
 </head>
 
@@ -91,63 +114,68 @@ $hasOrder = !empty($orders);
     <div class="container py-5">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
             <div>
-                <h1 class="h3 mb-1">My Orders</h1>
-                <p class="text-muted mb-0">overview of recent book orders.</p>
+                <h1 class="h3 mb-1">Orders Received</h1>
+                <p class="text-muted mb-0">Review incoming orders and accept them when ready.</p>
             </div>
             <div class="d-flex gap-2 w-100 w-md-auto">
-                <input id="orderSearch" class="form-control" placeholder="Search orders, titles or authors">
+                <input id="orderSearch" class="form-control" placeholder="Search orders or titles">
                 <select id="statusFilter" class="form-select">
                     <option value="all">All status</option>
                     <option value="pending">Pending</option>
-                    <option value="accepted">Accepted</option>
                     <option value="cancelled">Cancelled</option>
+                    <option value="accepted">Accepted</option>
                 </select>
-
                 <a href="homepage.php" class="btn btn-outline-secondary">Back</a>
             </div>
         </div>
 
+        <?php if (!empty($successMessage)): ?>
+            <div class="alert alert-success"><?= htmlspecialchars($successMessage) ?></div>
+        <?php endif; ?>
+
         <div class="row g-3 stats mb-4">
             <div class="col-6 col-md-3">
                 <div class="card p-3 text-center">
-                    <div class="text-muted">Books</div>
+                    <div class="text-muted">Orders</div>
                     <div class="h4 mb-0"><?= $hasOrder ? count($orders) : 0 ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="card p-3 text-center">
-                    <div class="text-muted">Total quantity</div>
+                    <div class="text-muted">Items</div>
                     <div class="h4 mb-0"><?= $hasOrder ? $totalItems : 0 ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="card p-3 text-center">
-                    <div class="text-muted">Spent</div>
-                    <div class="h4 mb-0 text-success"><?= $hasOrder ? 'R' . number_format($totalSpent, 2) : 'R0.00' ?>
-                    </div>
+                    <div class="text-muted">Pending</div>
+                    <div class="h4 mb-0 text-warning"><?= $pendingCount ?></div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="card p-3 text-center">
-                    <div class="text-muted">Status</div>
-                    <div class="h4 mb-0 text-warning"><?= $hasOrder ? ($orders[0]['status'] ?? 'Pending') : 'None' ?>
-                    </div>
+                    <div class="text-muted">Accepted</div>
+                    <div class="h4 mb-0 text-success"><?= $acceptedCount ?></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card p-3 text-center">
+                    <div class="text-muted">Cancelled</div>
+                    <div class="h4 mb-0 text-danger"><?= $cancelledCount ?></div>
                 </div>
             </div>
         </div>
 
         <div id="ordersGrid" class="row g-4">
             <?php if ($hasOrder): ?>
-                <?php foreach ($orders as $order): ?>
+                <?php foreach ($orders as $index => $order): ?>
                     <?php
                     $status = strtolower($order['status']);
                     $statusClass = 'bg-secondary';
                     if ($status === 'pending')
-                        $statusClass = 'bg-info';
+                        $statusClass = 'bg-warning text-dark';
                     elseif ($status === 'accepted')
                         $statusClass = 'bg-success';
-                    elseif ($status === 'cancelled')
-                        $statusClass = 'bg-danger';
                     ?>
                     <div class="col-12 col-md-6 col-lg-4 order-card-item" data-status="<?= htmlspecialchars($status) ?>">
                         <div class="card order-card h-100 shadow-lg">
@@ -155,7 +183,7 @@ $hasOrder = !empty($orders);
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title mb-1"><?= htmlspecialchars($order['name']) ?></h5>
                                 <p class="text-muted mb-2">Qty: <?= intval($order['qty']) ?></p>
-                                <div class="mb-2">
+                                <div class="mb-3">
                                     <span
                                         class="badge <?= $statusClass ?> badge-status"><?= htmlspecialchars($order['status']) ?></span>
                                     <small class="text-muted ms-2">Ordered <?= htmlspecialchars($order['date']) ?></small>
@@ -166,8 +194,20 @@ $hasOrder = !empty($orders);
                                         <div class="fw-semibold">R<?= number_format($order['price'], 2) ?></div>
                                     </div>
                                     <div class="text-end">
-                                        <a href="#" class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailModal">Details</a>
+                                        <?php if (strtolower($order['status']) === 'pending'): ?>
+                                            <form method="post" class="d-inline me-2">
+                                                <input type="hidden" name="accept_order" value="<?= (int) $order['id'] ?>">
+                                                <button type="submit" class="btn btn-sm btn-primary">Accept</button>
+                                            </form>
+                                            <form method="post" class="d-inline">
+                                                <input type="hidden" name="cancelled_order" value="<?= (int) $order['id'] ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                                            </form>
+                                        <?php elseif (strtolower($order['status']) === 'accepted'): ?>
+                                            <span class="btn btn-sm btn-outline-success disabled">Accepted</span>
+                                        <?php else: ?>
+                                            <span class="btn btn-sm btn-outline-danger disabled">Cancelled</span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -177,54 +217,17 @@ $hasOrder = !empty($orders);
             <?php else: ?>
                 <div class="col-12">
                     <div class="card shadow-lg rounded-4 p-4 text-center border-0">
-                        <h2 class="h5 mb-3">You have not ordered any items yet.</h2>
-                        <p class="text-muted mb-4">Add books to your cart and view them here!!</p>
+                        <h2 class="h5 mb-3">No orders received yet.</h2>
+                        <p class="text-muted mb-4">When a buyer places an order, it will appear here.</p>
                         <a href="homepage.php" class="btn btn-secondary btn-lg">Continue shopping</a>
                     </div>
                 </div>
             <?php endif; ?>
         </div>
-
-
-        <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Order Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-3">
-                            <div class="col-12 col-md-4">
-                                <img src="<?= htmlspecialchars($order['image']) ?>" class="img-fluid rounded"
-                                    alt="cover">
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <h5><?= htmlspecialchars($order['name']) ?></h5>
-                                <p class="text-muted">Quantity: <?= intval($order['qty']) ?></p>
-                                <p><strong>Unit price:</strong> R<?= number_format($order['price'], 2) ?></p>
-                                <p><strong>Total:</strong> R<?= number_format($order['total'], 2) ?></p>
-                                <p><strong>Status:</strong> <span
-                                        class="badge <?= $statusClass ?>"><?= htmlspecialchars($order['status']) ?></span>
-                                </p>
-                                <hr>
-                                <p class="mb-0 text-muted small">Shipping to: 123 Example St, City</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="#" class="btn btn-primary">View Receipt</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Front-end-only search + filter
         const search = document.getElementById('orderSearch');
         const filter = document.getElementById('statusFilter');
         const items = Array.from(document.querySelectorAll('.order-card-item'));
@@ -235,7 +238,7 @@ $hasOrder = !empty($orders);
             items.forEach(it => {
                 const text = it.innerText.toLowerCase();
                 const matchesQ = !q || text.includes(q);
-                const matchesStatus = (status === 'all') || (it.dataset.status === status) || (status === 'pending' && it.dataset.status === 'pending') || (status === 'accepted' && it.dataset.status === 'accepted') || (status === 'cancelled' && it.dataset.status === 'cancelled');
+                const matchesStatus = (status === 'all') || (it.dataset.status === status);
                 it.style.display = (matchesQ && matchesStatus) ? '' : 'none';
             });
         }

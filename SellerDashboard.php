@@ -4,9 +4,9 @@ session_start();
 require_once 'userDdconfig.php';
 
 //first change
-if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION['role'] !== 'admin')){
-    header('Location: homepage.php');
-    exit();
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION['role'] !== 'admin')) {
+  header('Location: homepage.php');
+  exit();
 }
 
 
@@ -72,7 +72,8 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
     <div class="offcanvas-body">
       <?php if (isset($_SESSION['userName'])): ?>
         <div class="text-center mb-4">
-          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 64px; height: 64px;">
+          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+            style="width: 64px; height: 64px;">
             <span class="fs-2 fw-bold"><?= strtoupper(substr($_SESSION['userName'], 0, 1)) ?></span>
           </div>
           <h5 class="fw-bold mb-0"><?= htmlspecialchars($_SESSION['userName']) ?></h5>
@@ -85,7 +86,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
           <a href="homepage.php" class="btn btn-outline-primary text-start border-0 py-2">
             Home
           </a>
-          <a href="ViewOrders.php" class="btn btn-outline-secondary text-start  border-0 py-2">
+          <a href="OrdersReceived.php" class="btn btn-outline-secondary text-start  border-0 py-2">
             View Orders
           </a>
           <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
@@ -109,7 +110,7 @@ if(!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION[
       <h2 class="text-uppercase fw-bold m-0">Seller Dashboard</h2>
       <a href="AddProduct.php" class="btn btn-primary shadow-sm px-4">Add Book</a>
     </div>
-   
+
 
 
     <!-- Summary Cards -->

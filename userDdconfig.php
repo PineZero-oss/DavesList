@@ -15,6 +15,7 @@ if($conn->connect_error){
     die('Connection Failed: ' . $conn->connect_error);
 }
 
+
 //kicking user when they refresh after deletion
 if(isset($_SESSION['user_id']) && ( $_SESSION['role'] == 'buyer' || $_SESSION['role'] == 'seller')){
     $current_user_id = $_SESSION['user_id'];

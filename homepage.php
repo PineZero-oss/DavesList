@@ -12,7 +12,9 @@ require_once 'userDdconfig.php';
     $searchBook = $conn->real_escape_string($_GET['searchBook']);
     $sql .= " WHERE bookName LIKE '%$searchBook%' OR Category LIKE '%$searchBook%'";
  }
- 
+
+$isSeller = isset($_SESSION['role']) && $_SESSION['role'] === 'seller';
+$isBuyer  = isset($_SESSION['role']) && $_SESSION['role'] === 'buyer';
 
 ?>
 
@@ -41,7 +43,7 @@ require_once 'userDdconfig.php';
         <br>
 
          <form class="d-flex gap-1" role="search" method="get">
-        <input class="form-control me-auto" type="search" placeholder="Search book..." aria-label="Search" name="searchBook"/>
+        <input class="form-control me-auto" type="search" placeholder="Search book..." aria-label="Search" name="searchBook" id="searchbar"/>
         <button class="btn btn-outline-secondary" type="submit">Search</button>
       </form>
 
@@ -58,10 +60,14 @@ require_once 'userDdconfig.php';
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></a>
         </li>
+        
 
+
+        <?php if ($isBuyer): ?>
         <li class="nav-item">
           <a class="nav-link" href="cart.php"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></a>
         </li>
+        <?php endif; ?>
 
         <li class="nav-item">
           <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff9696"><path d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z"/></svg></a>
@@ -100,12 +106,22 @@ require_once 'userDdconfig.php';
       <hr>
 
       <div class="d-grid gap-2">
-        <a href="SellerDashboard.php" class="btn btn-outline-primary text-start border-0 py-2">
-          Seller Dashboard
-        </a>
-        <a href="ViewOrders.php" class="btn btn-outline-warning text-start border-0 py-2">
-          View Orders
-        </a>
+        <?php if ($isSeller): ?>
+          <a href="SellerDashboard.php" id="sellersDashboardbtn" class="btn btn-outline-primary text-start border-0 py-2">
+            Seller Dashboard
+          </a>
+        <?php endif; ?>
+
+        <?php if ($isSeller): ?>
+          <a href="OrdersReceived.php" class="btn btn-outline-warning text-start border-0 py-2">
+            Orders Received
+          </a>
+        <?php elseif ($isBuyer): ?>
+          <a href="ViewOrders.php" class="btn btn-outline-warning text-start border-0 py-2">
+            View Orders
+          </a>
+        <?php endif; ?>
+        
         <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
           Logout
         </a>
@@ -190,7 +206,7 @@ require_once 'userDdconfig.php';
  if($displayBooks->num_rows > 0){
   foreach($displayBooks as $row){
 ?>
-    <div class="col-12 col-md-4 mb-3">
+    <div class="col-12 col-md-4 mb-3 ">
       <div class="card h-100">
         
         <img src="<?= htmlspecialchars("uploads/" . $row['bookImage']) ?>" class="card-img-top" alt="Book cover">
@@ -198,12 +214,16 @@ require_once 'userDdconfig.php';
           <h5 class="card-title"><?= htmlspecialchars($row['bookName']) ?></h5>
           <p class="card-price">R<?= number_format($row['bookPrice'],2) ?></p>
           <p class="card-text"><span class="badge rounded-pill text-bg-warning text-white"><?= htmlspecialchars($row['Category']) ?></span></p>
-          <form method="post" action="addToCart.php" class="d-inline">
+          <form method="post" action="addToCart.php" class="d-inline" >
+            <?php if ($isBuyer): ?>
             <input type="hidden" name="book_id" value="<?= htmlspecialchars($row['book_Id']) ?>">
             <button type="submit" class="btn btn-outline-primary">Add to cart</button>
+            <?php endif; ?> 
           </form>
-        
-          <a href="#" class="btn btn-outline-danger">Flag</a>
+          <form method="post" action="" class="d-inline">
+            <a href="#" class="btn btn-outline-danger">Flag</a> 
+          </form>
+          
         </div>
       </div>
     </div>
@@ -225,6 +245,13 @@ require_once 'userDdconfig.php';
 </footer>
 
   <script src="js/bootstrap.bundle.min.js"></script>
+
+
+
+
+  
+
+
 
 </body>
 </html>

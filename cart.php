@@ -40,7 +40,7 @@ $cart = $_SESSION[$cart_key] ?? [];
 
     <?php if (empty($cart)): ?>
       <div class="card shadow-lg rounded-4 p-4 text-center border-0">
-        <h2 class="h5 mb-3">Your cart is currently empty</h2>
+        <h2 class="h5 mb-3">Your cart is currently empty </h2>
         <p class="text-muted mb-4">Add your favorite books to the cart and they'll appear here.</p>
         <a href="homepage.php" class="btn btn-secondary btn-lg ">Continue shopping</a>
       </div>
