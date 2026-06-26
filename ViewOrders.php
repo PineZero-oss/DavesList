@@ -107,34 +107,32 @@ $hasOrder = !empty($orders);
             </div>
         </div>
 
-        <div class="row g-3 stats mb-4">
-            <div class="col-6 col-md-3">
-                <div class="card p-3 text-center">
-                    <div class="text-muted">Books</div>
-                    <div class="h4 mb-0"><?= $hasOrder ? count($orders) : 0 ?></div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card p-3 text-center">
-                    <div class="text-muted">Total quantity</div>
-                    <div class="h4 mb-0"><?= $hasOrder ? $totalItems : 0 ?></div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card p-3 text-center">
-                    <div class="text-muted">Spent</div>
-                    <div class="h4 mb-0 text-success"><?= $hasOrder ? 'R' . number_format($totalSpent, 2) : 'R0.00' ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card p-3 text-center">
-                    <div class="text-muted">Status</div>
-                    <div class="h4 mb-0 text-warning"><?= $hasOrder ? ($orders[0]['status'] ?? 'Pending') : 'None' ?>
-                    </div>
-                </div>
+    <div class="row g-3 stats mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card p-3 text-center">
+                <div class="text-muted">Books</div>
+                <div class="h4 mb-0"><?= $hasOrder ? count($orders) : 0 ?></div>
             </div>
         </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 text-center">
+                <div class="text-muted">Total quantity</div>
+                <div class="h4 mb-0"><?= $hasOrder ? $totalItems : 0 ?></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 text-center">
+                <div class="text-muted">Spent</div>
+                <div class="h4 mb-0 text-success"><?= $hasOrder ? 'R' . number_format($totalSpent, 2) : 'R0.00' ?></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 text-center">
+                <div class="text-muted">Status</div>
+                <div class="h4 mb-0 text-warning"><?= $hasOrder ? 'Processing' : 'None' ?></div>
+            </div>
+        </div>
+    </div>
 
         <div id="ordersGrid" class="row g-4">
             <?php if ($hasOrder): ?>
