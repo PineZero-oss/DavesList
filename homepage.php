@@ -220,8 +220,9 @@ $isBuyer  = isset($_SESSION['role']) && $_SESSION['role'] === 'buyer';
             <button type="submit" class="btn btn-outline-primary">Add to cart</button>
             <?php endif; ?> 
           </form>
-          <form method="post" action="" class="d-inline">
-            <a href="#" class="btn btn-outline-danger">Flag</a> 
+          <form method="post" action="flaggedBooks.php" class="d-inline">
+            <input type="hidden" name="fBook_id" value="<?= htmlspecialchars($row['book_Id']) ?>">
+            <button type="submit" class="btn btn-outline-danger">Report</button>
           </form>
           
         </div>

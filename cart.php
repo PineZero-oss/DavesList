@@ -4,8 +4,8 @@ require_once 'userDdconfig.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 if (!$user_id) {
-    header('Location: userLoginRegister.php');
-    exit();
+  header('Location: userLoginRegister.php');
+  exit();
 }
 $cart_key = 'cart_' . $user_id;
 $cart = $_SESSION[$cart_key] ?? [];
@@ -74,7 +74,7 @@ $cart = $_SESSION[$cart_key] ?? [];
                       </div>
                       <p class="mb-0 fw-semibold">Line total: R<?= number_format($line, 2) ?></p>
                       <div class="mt-3">
-  
+
                       </div>
                     </div>
                   </div>
@@ -103,8 +103,16 @@ $cart = $_SESSION[$cart_key] ?? [];
                 <span class="fs-4 fw-bold">R<?= number_format($total, 2) ?></span>
               </div>
               <!-- check href of viewOrders -->
-              <a href="ViewOrders.php" class="btn btn-info text-white w-100 rounded-pill mb-2">view orders</a>
-              <a href="checkOut.php" class="btn btn-outline-primary w-100 rounded-pill mb-2"> checkout</a>
+              <form action="https://sandbox.payfast.co.za/eng/process" method="post">
+                <input type="hidden" name="merchant_id" value="	10050683">
+                <input type="hidden" name="merchant_key" value="	kz9v0q5csqy2p">
+                <input type="hidden" name="return_url" value="https://www.example.com/success">
+                <input type="hidden" name="cancel_url" value="https://www.example.com/cancel">
+                <input type="hidden" name="notify_url" value="https://www.example.com/notify">
+                <input type="hidden" name="amount" value="<?= number_format($total, 2) ?>">
+                <input type="hidden" name="item_name" value="<?= htmlspecialchars(implode(', ', array_unique($bookNames))) ?>">
+                <input type="submit" class="btn btn-outline-success w-100 rounded-pill mb-2" value="checkout">
+              </form>
               <a href="homepage.php" class="btn btn-outline-secondary w-100 rounded-pill mb-2">Continue shopping</a>
               <form method="post" action="addToCart.php">
                 <button type="submit" name="clearCart" value="1" class="btn btn-outline-danger w-100 rounded-pill">Clear
