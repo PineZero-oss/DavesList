@@ -130,16 +130,16 @@ require_once 'userDdconfig.php';
 
   <h2 class="text-center text-uppercase fw-bold mb-4">Browse by Category</h2>
   <div class="d-flex  flex-wrap justify-content-center gap-3 mb-5">
-    <a href="Index.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
-    <a href="Index.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
-    <a href="Index.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>
-    <a href="Index.php?category=Thriller" class="btn btn-outline-secondary rounded-pill">Thriller</a>
-    <a href="Index.php?category=Horror" class="btn btn-outline-secondary rounded-pill">Horror</a>
-    <a href="Index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
-    <a href="Index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
-    <a href="Index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
-    <a href="Index.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
-    <a href="Index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
+    <a href="index.php?category=Fantasy" class="btn btn-outline-secondary rounded-pill">Fantasy</a>
+    <a href="index.php?category=Action" class="btn btn-outline-secondary rounded-pill">Action</a>
+    <a href="index.php?category=Science Fiction" class="btn btn-outline-secondary rounded-pill">Science Fiction</a>
+    <a href="index.php?category=Thriller" class="btn btn-outline-secondary rounded-pill">Thriller</a>
+    <a href="index.php?category=Horror" class="btn btn-outline-secondary rounded-pill">Horror</a>
+    <a href="index.php?category=Romance" class="btn btn-outline-secondary rounded-pill">Romance</a>
+    <a href="index.php?category=Mystery" class="btn btn-outline-secondary rounded-pill">Mystery</a>
+    <a href="index.php?category=Biography" class="btn btn-outline-secondary rounded-pill">Biography</a>
+    <a href="index.php?category=Comedy" class="btn btn-outline-secondary rounded-pill">Comedy</a>
+    <a href="index.php" class="btn btn-outline-secondary rounded-pill">All Books</a>
   </div>
 </div>
 
@@ -185,3 +185,4 @@ require_once 'userDdconfig.php';
 
 </body>
 </html>
+

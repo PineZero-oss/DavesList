@@ -25,7 +25,7 @@ require_once 'userDdconfig.php';
             <a class="navbar-brand text-uppercase fw-bold fs-3" href="#">DavesList</a>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-row justify-content-around align-content-center gap-3">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="Index.php">
+                    <a class="nav-link active" aria-current="page" href="index.php">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                             fill="#ff9696">
                             <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />

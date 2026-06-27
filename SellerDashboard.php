@@ -89,7 +89,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'seller' && $_SESSION
           <a href="OrdersReceived.php" class="btn btn-outline-secondary text-start  border-0 py-2">
             View Orders
           </a>
-          <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
+          <a href="index.php" class="btn btn-outline-danger text-start border-0 py-2">
             Logout
           </a>
         </div>

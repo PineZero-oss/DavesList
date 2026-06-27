@@ -122,7 +122,7 @@ $isBuyer  = isset($_SESSION['role']) && $_SESSION['role'] === 'buyer';
           </a>
         <?php endif; ?>
         
-        <a href="Index.php" class="btn btn-outline-danger text-start border-0 py-2">
+        <a href="index.php" class="btn btn-outline-danger text-start border-0 py-2">
           Logout
         </a>
       </div>
@@ -256,3 +256,4 @@ $isBuyer  = isset($_SESSION['role']) && $_SESSION['role'] === 'buyer';
 
 </body>
 </html>
+

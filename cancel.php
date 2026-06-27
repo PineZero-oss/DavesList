@@ -37,3 +37,4 @@ file_put_contents('payfast_cancel_log.txt', date('Y-m-d H:i:s') . " - Payment ca
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

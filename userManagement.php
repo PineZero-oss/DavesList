@@ -34,7 +34,7 @@ require_once 'userDdconfig.php';
                         <span class="navbar-text me-3 text-info">Logged in as: <strong><?= htmlspecialchars($_SESSION['userName']) ?></strong></span>
                     </li>
                     <li class="nav-item">
-                        <a href="Index.php" class="btn btn-outline-danger btn-sm">Logout</a>
+                        <a href="index.php" class="btn btn-outline-danger btn-sm">Logout</a>
                         <a href="adminPage.php" class="btn btn-outline-light btn-sm">Back</a>
                     </li>
                     
