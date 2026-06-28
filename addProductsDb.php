@@ -89,17 +89,34 @@ if (isset($_POST['deleteBook'])) {
     $dBookimage = $_POST['dBookImage'];
 
     // Added ownership check to the delete query
-    $deleteBook = $conn->query("DELETE FROM addbooks WHERE book_Id='$dBookid' AND user_id='$user_id'");
+    // If an admin is performing the delete, allow deleting any book and
+    // redirect back to the admin book management page. Otherwise enforce
+    // ownership and redirect to the seller dashboard.
+    if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+        $deleteBook = $conn->query("DELETE FROM addbooks WHERE book_Id='$dBookid'");
+    } else {
+        $deleteBook = $conn->query("DELETE FROM addbooks WHERE book_Id='$dBookid' AND user_id='$user_id'");
+    }
 
     if ($deleteBook) {
-        unlink("uploads/" . $dBookimage);
+        if (file_exists("uploads/" . $dBookimage)) {
+            unlink("uploads/" . $dBookimage);
+        }
         $_SESSION['status'] = "Product has been successfully deleted";
-        header('Location: SellerDashboard.php');
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            header('Location: bookManagement.php');
+        } else {
+            header('Location: SellerDashboard.php');
+        }
         exit();
     } else {
 
         $_SESSION['status'] = "Product failed to be deleted";
-        header('Location: SellerDashboard.php');
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            header('Location: bookManagement.php');
+        } else {
+            header('Location: SellerDashboard.php');
+        }
         exit();
 
     }
